@@ -41,14 +41,23 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
+        # Verifica si el contador de modificaciones excede 2
+        if session[:post_modification_count].to_i <= 2
+          session[:post_modification_count] ||= 1
+          session[:post_modification_count] += 1
+          format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+          format.json { render :show, status: :ok, location: @post }
+        else
+          format.html { redirect_to post_url(@post), alert: "No puedes modificar este artículo más de 2 veces." }
+          format.json { render json: { error: "No puedes modificar este artículo más de 2 veces." }, status: :unprocessable_entity }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
