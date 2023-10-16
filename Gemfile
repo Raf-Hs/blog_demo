@@ -7,7 +7,7 @@ gem "rails", "~> 7.1.1"
 gem 'simple_form'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
-
+gem "will_paginate"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.4"
 

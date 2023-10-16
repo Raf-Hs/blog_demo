@@ -1,12 +1,29 @@
-<div class="comment-<%= comment.id %> container"
-    style="border: 1px solid black; padding: 1em; margin: 1em;">
-    <%= comment.name %><br />
-    <span>Posted <%= comment.created_at %></span>
-    
-    <div class="button-group float-end">
-        <%= button_to "Delete", [post, comment], class: "btn btn-danger", method: :delete %>
+<div class="comment-<%= comment.id %> container" style="border: 1px solid black; padding: 1em; margin: 1em;">
+  <p><strong>Name:</strong> <%= comment.email %></p>
+  <% if (comment.updated_at - comment.created_at) > 1 %>
+    <p><span>Edited <%= time_ago_in_words(comment.updated_at) %> ago</span></p>
+  <% else %>
+    <p><span>Posted: <%= comment.created_at.strftime('%B %e, %Y at %l:%M %p') %></span></p>
+  <% end %>
+  <div class="btn-group float-end">
+    <div class="container">
+      <%= link_to "Edit", nil, remote: true, class: "btn btn-warning",
+        data: {
+          controller: "comments",
+          action: "comments#toggleForm",
+          comments_form_param: "edit-form-#{comment.id}",
+          comments_content_param: "comment-content-#{comment.id}"
+        } %>
     </div>
-    
-    <hr/>
+    <div class="container">
+      <%= button_to "Delete", [post, comment], { class: "btn btn-danger", method: :delete } %>
+    </div>
+  </div>
+  <div id="edit-form-<%= comment.id %>" class="d-none">
+    <%= render 'comments/form', post: @post, comment: comment, submit_label: "Update" %>
+  </div>
+  <hr />
+  <div id="comment-content-<%= comment.id %>">
     <%= comment.content %>
+  </div>
 </div>
