@@ -1,7 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :post
+  belongs_to :user
   has_rich_text :body
-  belongs_to :post
-  validates :email, presence: true
-  validates :comment, presence: true
+
 end
