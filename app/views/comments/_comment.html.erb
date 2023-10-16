@@ -1,0 +1,12 @@
+<div class="comment-<%= comment.id %> container"
+    style="border: 1px solid black; padding: 1em; margin: 1em;">
+    <%= comment.name %><br />
+    <span>Posted <%= comment.created_at %></span>
+    
+    <div class="button-group float-end">
+        <%= button_to "Delete", [post, comment], class: "btn btn-danger", method: :delete %>
+    </div>
+    
+    <hr/>
+    <%= comment.content %>
+</div>

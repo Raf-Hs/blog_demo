@@ -3,14 +3,18 @@
 
 <div class="container">
 <h1>Posts</h1>
-<div id="posts" >
+<div id="posts">
   <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+    <div class="card mb-3">
+      <div class="card-body">
+        <%= render post %>
+      </div>
+      <div class="card-footer text-end">
+        <%= link_to "Show this post", post, class: "btn btn-primary" %>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New post", new_post_path %>
+
 </div>

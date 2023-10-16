@@ -8,13 +8,20 @@
   </div>
 
   <p>
-    <strong>Image:</strong>
-    <%= post.image %>
+  <strong>Image:</strong>
+  <% if post.image =~ /\.(png|jpg|jpeg|gif|bmp|webp)\z/i %>
+    <%= image_tag post.image, alt: "Image Description", style: "max-width: 100px; max-height: 100px;" %>
+  <% else %>
+    No image available
+  <% end %>
   </p>
 
   <p>
     <strong>Rating:</strong>
     <%= post.rating %>
   </p>
-
+ <p>
+  <strong>Posted:</strong>
+ <%= post.created_at %></span>
+ </p>
 </div>
