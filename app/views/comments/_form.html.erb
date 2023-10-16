@@ -1,0 +1,22 @@
+<%= simple_form_for([@post, @post.comments.build]) do |f| %>
+  <div class="field">
+    <div class="control">
+      <%= f.input :email, input_html: { class: 'input' }, wrapper: false, label_html: { class: 'label' } %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <%= f.input :comment, input_html: { class: 'textarea' }, wrapper: false, label_html: { class: 'label' } %>
+    </div>
+  </div>
+
+  <%= f.input :post_id, as: :hidden %>
+  <!-- The above line sets the post_id as a hidden field, as it should be automatically populated -->
+
+  <div class="field">
+    <div class="control">
+      <%= f.button :submit, 'Leave a reply', class: "button is-primary" %>
+    </div>
+  </div>
+<% end %>
