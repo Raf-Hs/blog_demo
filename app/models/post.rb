@@ -4,11 +4,15 @@ class Post < ApplicationRecord
   validates :image, presence: true
   validate :valid_rating_range
   has_many :comments, dependent: :destroy
+  self.table_name = 'posts'
 
   def self.ransackable_attributes(auth_object = nil)
     ["body", "title"]
     end
 
+  def self.ransackable_associations(auth_object = nil)
+    ["user"]
+  end
 
 
   private

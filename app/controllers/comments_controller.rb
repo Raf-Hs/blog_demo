@@ -8,9 +8,10 @@ class CommentsController < ApplicationController
 		if @comment.save
 			redirect_to @post, notice: 'Comment created successfully.'
 		else
-			# Handle errors
-			render 'posts/show' # Puedes personalizar la vista aquí
+			# Renderiza la vista de la página de inicio o la vista que desees.
+			render 'pages/home' # Asegúrate de ajustar el nombre de la vista según tu estructura de carpetas y rutas.
 		end
+
 	end
 
 
