@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
   get 'search', to: "search#index"
   devise_for :users
+
   resources :posts do
-  	resources :comments
+    member do
+      put 'rate' # Esto creará una ruta para la acción rate
+    end
+    resources :comments
   end
+
   get 'about', to: 'pages#about'
-
-
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -15,5 +18,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-   root "pages#home"
+  root "pages#home"
 end

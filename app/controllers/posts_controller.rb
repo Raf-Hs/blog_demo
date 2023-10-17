@@ -18,6 +18,29 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+  def rate
+    @post = Post.find(params[:id])
+    rating_value = params[:post][:rating].to_i
+
+    # Obtén el rating actual del post
+    current_rating = @post.rating || 0
+
+    # Calcula el nuevo rating promediando el rating actual y el nuevo rating
+    new_rating = (current_rating + rating_value) / 2.0
+
+    # Actualiza el rating del post con el nuevo valor
+    @post.update(rating: new_rating)
+
+    # Aquí puedes agregar las validaciones para post_modification_count
+    if session[:post_modification_count].to_i <= 2
+      session[:post_modification_count] ||= 2
+      session[:post_modification_count] += 1
+      redirect_to @post, notice: 'Post rated successfully.'
+    else
+      redirect_to @post, alert: 'No puedes calificar este artículo más de 1 vez.'
+    end
+  end
+
   # GET /posts/1/edit
   def edit
   end
@@ -41,22 +64,15 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        # Verifica si el contador de modificaciones excede 2
-        if session[:post_modification_count].to_i <= 2
-          session[:post_modification_count] ||= 1
-          session[:post_modification_count] += 1
-          format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-          format.json { render :show, status: :ok, location: @post }
-        else
-          format.html { redirect_to post_url(@post), alert: "No puedes modificar este artículo más de 2 veces." }
-          format.json { render json: { error: "No puedes modificar este artículo más de 2 veces." }, status: :unprocessable_entity }
-        end
+        format.html { redirect_to post_url(@post), notice: 'Post was successfully updated.' }
+        format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
 
   # DELETE /posts/1 or /posts/1.json
