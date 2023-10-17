@@ -16,5 +16,39 @@
   <% end %>
 </div>
 
-<%= will_paginate @posts %>
+<%= will_paginate @posts, previous_label: '', next_label: '', class: 'my-custom-pagination' %>
 </div>
+
+<style>
+  .my-custom-pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+  }
+
+  .my-custom-pagination a {
+    text-decoration: none;
+    color: #007BFF; /* Color de enlace predeterminado */
+    padding: 0.5rem;
+    margin: 0.2rem;
+    border: 1px solid #007BFF; /* Borde alrededor de los enlaces */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  .my-custom-pagination .current {
+    text-decoration: none;
+    color: #007BFF; /* Color de enlace predeterminado */
+    padding: 0.5rem;
+    margin: 0.2rem;
+    border: 1px solid #007BFF; /* Borde alrededor de los enlaces */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: transparent; /* Fondo transparente */
+  }
+
+  /* Oculta las etiquetas "Anterior" y "Siguiente" */
+  .my-custom-pagination .previous_page,
+  .my-custom-pagination .next_page {
+    display: none;
+  }
+</style>

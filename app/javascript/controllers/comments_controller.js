@@ -1,7 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
+import { Turbo } from "@hotwired/turbo-rails"
 
 export default class extends Controller {
-  initialize() {}
+  initialize() {
+    document.addEventListener('turbo:before-stream-render', (event) => {
+      // Evita el desplazamiento hacia arriba al actualizar la página con Turbo Streams
+      window.scrollTo(0, window.scrollY);
+    });
+  }
+
   connect() {}
 
   toggleForm(event) {
