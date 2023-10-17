@@ -3,9 +3,13 @@ class Post < ApplicationRecord
   validates :body, presence:true, length: {minimum: 10, maximum:1000}
   validates :image, presence: true
   validate :valid_rating_range
-
-
   has_many :comments, dependent: :destroy
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["body", "title"]
+    end
+
+
 
   private
 
