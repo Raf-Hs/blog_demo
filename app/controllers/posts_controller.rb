@@ -25,20 +25,24 @@ class PostsController < ApplicationController
     # Obtén el rating actual del post
     current_rating = @post.rating || 0
 
-    # Calcula el nuevo rating promediando el rating actual y el nuevo rating
-    new_rating = (current_rating + rating_value) / 2.0
+    # Verifica si el usuario ya ha calificado el post en esta sesión
+    if session[:post_modified_post_ids]&.include?(@post.id)
+      redirect_to @post, alert: 'No puedes calificar este artículo más de 1 vez.'
+    else
+      # Calcula el nuevo rating promediando el rating actual y el nuevo rating
+      new_rating = (current_rating + rating_value) / 2.0
 
-    # Aquí puedes agregar las validaciones para post_modification_count
-    if session[:post_modification_count].to_i <= 2
-      session[:post_modification_count] ||= 1
-      session[:post_modification_count] += 1
       # Actualiza el rating del post con el nuevo valor
       @post.update(rating: new_rating)
+
+      # Agrega el ID del post a la lista de posts calificados en esta sesión
+      session[:post_modified_post_ids] ||= []
+      session[:post_modified_post_ids] << @post.id
+
       redirect_to @post, notice: 'Post rated successfully.'
-    else
-      redirect_to @post, alert: 'No puedes calificar este artículo más de 1 vez.'
     end
   end
+
 
 
   # GET /posts/1/edit

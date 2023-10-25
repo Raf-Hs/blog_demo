@@ -21,7 +21,7 @@
     <%= post.rating %>
   </p>
  <p>
-  <strong>Posted:</strong>
- <%= post.created_at %></span>
+  <strong>Posted:</strong><%= post.created_at.strftime('%B %e, %Y at %l:%M %p') %></span>
+ <p><strong><span>Edited</strong> <%= post.updated_at.strftime('%B %e, %Y at %l:%M %p') %></span></p>
  </p>
 </div>
