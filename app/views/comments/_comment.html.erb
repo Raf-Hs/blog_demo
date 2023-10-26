@@ -1,7 +1,9 @@
 <div class="comment-<%= comment.id %> container" style="border: 1px solid black; padding: 1em; margin: 1em;">
-  <p><strong>Name:</strong> <%= comment.email %></p>
+  <p><strong>Email:</strong> <%= comment.email %></p>
+  <p><strong>Name:</strong> <%= comment.name %></p>
   <% if (comment.updated_at - comment.created_at) > 1 %>
-    <p><span>Edited <%= comment.updated_at %></span></p>
+   <p><span>Original Posted: <%= comment.created_at.strftime('%B %e, %Y at %l:%M %p') %></span></p>
+    <p><span>Edited <%= comment.updated_at.strftime('%B %e, %Y at %l:%M %p') %></span></p>
   <% else %>
     <p><span>Posted: <%= comment.created_at.strftime('%B %e, %Y at %l:%M %p') %></span></p>
   <% end %>
